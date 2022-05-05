@@ -25,3 +25,11 @@ if result == 1:
   print("Wohoo! Customer will buy!")
 else:
     print("Nah! Customer will not buy!")
+y_pred = model.predict(X_test)
+print(np.concatenate((y_pred.reshape(len(y_pred),1),y_test.reshape(len(y_test),1)),1))
+from sklearn.metrics import confusion_matrix,accuracy_score
+cm = confusion_matrix(y_test,y_pred)
+print("Confusion__matrix:")
+print(cm)
+print("Accuracy of the model: {0}.".format(accuracy_score(y_test,y_pred*100)))
+
