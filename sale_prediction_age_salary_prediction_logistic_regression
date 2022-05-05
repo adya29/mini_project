@@ -16,8 +16,8 @@ X_test = sc.fit_transform(X_test)
 from sklearn.linear_model import LogisticRegression #import logistic regression library
 model = LogisticRegression(random_state = 0) 
 model.fit(X_train,y_train)
-age = int(input("Enter new customer age:")) #give your input for customer age
-salary = int(input("Enter new customer salary:")) #give your customer salary
+age = int(input("Enter new customer age:")) #prediction whether customer of age and salary will buy the product
+salary = int(input("Enter new customer salary:")) 
 newCust = [[age,salary]]
 result = model.predict(sc.transform(newCust))
 print(result)
