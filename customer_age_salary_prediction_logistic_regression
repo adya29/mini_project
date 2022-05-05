@@ -1,0 +1,27 @@
+import pandas as pd #import pandas library
+import numpy as np # import numpy library
+dataset = pd.read_csv("DigitalAd_dataset.csv") # read the dataset 
+print(dataset.shape)  #print the dataset size
+print(dataset.head(400)) # print the dataset headers
+X = dataset.iloc[:,:-1].values #separating the dataset
+X
+Y = dataset.iloc[:,-1].values
+Y
+from sklearn.model_selection import train_test_split #training the model
+X_train,X_test,y_train,y_test = train_test_split(X,Y,test_size=0.25,random_state = 0)
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.fit_transform(X_test)
+from sklearn.linear_model import LogisticRegression #import logistic regression library
+model = LogisticRegression(random_state = 0) 
+model.fit(X_train,y_train)
+age = int(input("Enter new customer age:")) #give your input for customer age
+salary = int(input("Enter new customer salary:")) #give your customer salary
+newCust = [[age,salary]]
+result = model.predict(sc.transform(newCust))
+print(result)
+if result == 1:
+  print("Wohoo! Customer will buy!")
+else:
+    print("Nah! Customer will not buy!")
