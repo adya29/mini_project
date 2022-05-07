@@ -1,0 +1,29 @@
+import pandas as pd #to load dataset
+import numpy as np #for the array
+from sklearn.linear_model import LinearRegression #for algorithm
+import matplotlib.pyplot as plt #to plot
+dataset = pd.read_csv('landpriceprediction.csv') #load dataset
+print(dataset.shape) #summarize dataset
+print(dataset.head(10))
+plt.xlabel('land') #visualize dataset
+plt.ylabel('price')
+plt.scatter(dataset.land,dataset.price,color='blue',marker='*')
+#segregate dataset into input X and output Y
+X = dataset.drop('price',axis = 'columns')
+X
+Y = dataset.price
+Y
+# training dataset
+model = LinearRegression()
+model.fit(X,Y)
+# trying on prediction
+x = 6670
+LandAreainSqFt=[[x]]
+PredictedmodelResult = model.predict(LandAreainSqFt)
+print("Predicted price in INR:",PredictedmodelResult)
+m=model.coef_
+print("m for the data:",m)
+b = model.intercept_
+print("intercept for the data:",b)
+y = m*x+b
+print("price for the " ,x ," square feet land is :", y,  "INR")
