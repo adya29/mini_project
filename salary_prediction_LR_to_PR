@@ -1,0 +1,39 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+dataset = pd.read_csv('dataset.csv')
+print(dataset.shape)
+print(dataset.head(10))
+# Separating dataset into X and Y
+X= dataset.iloc[:,:-1].values
+X
+Y = dataset.iloc[:,-1].values
+Y
+# training dataset into Linear Regression
+from sklearn.linear_model import LinearRegression
+modelLR = LinearRegression()
+modelLR.fit(X,Y)
+plt.scatter(X,Y,color = 'blue',marker='*')
+plt.plot(X,modelLR.predict(X))
+plt.title("Linear regression")
+plt.xlabel("Level")
+plt.ylabel("Salary")
+plt.show()
+# training dataset into Polynomial Regression
+from sklearn.preprocessing import PolynomialFeatures
+modelPR = PolynomialFeatures(degree = 2)
+xPoly = modelPR.fit_transform(X)
+modelPLR = LinearRegression()
+modelPLR.fit(xPoly,Y)
+modelLR = LinearRegression()
+modelLR.fit(X,Y)
+plt.scatter(X,Y,color = 'black',marker='*')
+plt.plot(X,modelPLR.predict(modelPR.fit_transform(X)))
+plt.title("Polynomial regression")
+plt.xlabel("Level")
+plt.ylabel("Salary")
+plt.show()
+#Prediction
+a = 9.2
+salaryPred = modelPLR.predict(modelPR.fit_transform([[a]]))
+print("salary of person with ",a,"years of experience is:",salaryPred,"INR")
