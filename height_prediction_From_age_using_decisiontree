@@ -1,0 +1,37 @@
+import pandas as pd #to load dataset
+import numpy as np #for the array ops
+import matplotlib.pyplot as plt  # for visualization 
+dataset = pd.read_csv('dataset.csv') # load the dataset
+print(dataset.shape) #summarize the dataset
+print(dataset.head(71))
+# segregationg the dataset
+X= dataset.iloc[:,:-1].values
+X
+Y = dataset.iloc[:,-1].values
+Y
+# splitting dataset for the training 
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test = train_test_split(X,Y,test_size =0.20,random_state=0)
+# algorithm --> decision tree
+from sklearn.tree import DecisionTreeRegressor
+model = DecisionTreeRegressor()
+model.fit(x_train,y_train)
+#Visualization of graph
+X_val = np.arange(min(x_train),max(x_train),0.01)
+X_val = X_val.reshape((len(X_val),1))
+plt.scatter(x_train,y_train,color = 'blue')
+plt.plot(X_val,model.predict(X_val),color= 'red') #datapoint fitting
+plt.title('Height classification using DecisionTree')
+plt.xlabel('Age (in years')
+plt.ylabel('Height (in cm)')
+plt.figure()
+plt.show()
+
+#prediction & validation
+ypred = model.predict(x_test)
+from sklearn.metrics import r2_score,mean_squared_error
+mse = mean_squared_error(y_test,ypred)
+rmse = np.sqrt(mse)
+print("Root mean square error :",rmse)
+r2score= r2_score(y_test,ypred)
+print("R^2 Score:",r2score*100)
